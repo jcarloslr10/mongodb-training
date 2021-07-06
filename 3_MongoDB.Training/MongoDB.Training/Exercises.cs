@@ -53,6 +53,10 @@ namespace MongoDB.Training
             Assert.Equal(2, documents[1].Tags.Count);
         }
 
+        // Use the following links to find out which query methods and operators to use in the following exercises.
+        // Collection methods: http://mongodb.github.io/mongo-csharp-driver/2.12/apidocs/html/Methods_T_MongoDB_Driver_MongoCollection_1.htm
+        // Query operators: https://mongodb.github.io/mongo-csharp-driver/2.12/reference/driver/definitions/
+
         // Insert a document without specifying _id and query it by name and priority fields
         [Fact]
         public async Task Exercise_1_Create_Read()
