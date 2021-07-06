@@ -1,0 +1,10 @@
+1. Open MongoDB Compass.
+2. Connect to your server using the connection string 'mongodb://mongodb:training@localhost:27018'.
+3. Go to the database 'playground'.
+4. Open 'documents' collection and click on 'Explain Plan' option on the top bar.
+5. Click on the 'Options' button to dropdown the query options panel.
+6. Copy the following filter definition into the 'FILTER' text field:
+{ $and: [{ tags: { $in: [new ObjectId('000000000002')] } }, { priority: { $gt: 7 } }] }
+7. Copy the following sort definition into the 'SORT' text field:
+{ lastUpdatedDate: -1 }
+8. Click on 'EXPLAIN' button to see the results of the query plan in a 'VISUAL TREE' mode.

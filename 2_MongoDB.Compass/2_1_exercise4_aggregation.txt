@@ -1,0 +1,42 @@
+1. Open MongoDB Compass.
+2. Connect to your server using the connection string 'mongodb://mongodb:training@localhost:27018'.
+3. Go to the database 'playground'.
+4. Open 'documents' collection and click on 'Aggregations' option on the top bar.
+5. Click on the arrow button next to the plus button on the and select 'New Pipeline From Text' option.
+6. Copy the following pipeline below and click on 'CREATE NEW' button.
+
+[
+  {
+    $match: {
+      tags: {
+        $in: [new ObjectId('000000000002')]
+      }
+    }
+  },
+  {
+    $sort: {
+      lastUpdatedDate: -1
+    }
+  },
+  {
+    $limit: 2
+  },
+  {
+    $lookup: {
+      from: 'tags',
+      localField: 'tags',
+      foreignField: '_id',
+      as: 'tagsExtended'
+    }
+  },
+  {
+    $set: {
+      tags: '$tagsExtended.name'
+    }
+  },
+  {
+    $project: {
+      tagsExtended: 0
+    }
+  }
+]

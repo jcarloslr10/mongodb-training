@@ -1,0 +1,82 @@
+// Playground using MongoDB Query Language (MQL)
+
+// Prerequisites to run
+// 1. In VSCode's side panel, click on the MongoDB icon to open the MongoDB extension.
+// 2. In the 'Connections' panel at the top left, add a new connection using the 'Connect with Connection String'.
+// 3. Use the following connection string: mongodb://mongodb:training@localhost:27018
+
+// Select the database to use.
+use('playground');
+
+// Clean up collections.
+db.tags.drop();
+db.documents.drop();
+
+// Populate 'tags' collection.
+var tagId1 = new ObjectId('000000000001');
+var tagId2 = new ObjectId('000000000002');
+var tagId3 = new ObjectId('000000000003');
+
+db.tags.insertMany([
+  { _id: tagId1, name: 'Operations', creationDate: new Date('2021-07-08T12:00:00Z') },
+  { _id: tagId2, name: 'Finance', creationDate: new Date('2021-07-08T12:00:00Z') },
+  { _id: tagId3, name: 'Marketing', creationDate: new Date('2021-07-08T12:00:00Z') },
+]);
+
+// Populate 'documents' collection.
+db.documents.insertMany([
+  { _id: new ObjectId('000000000001'), name: 'Contract 1', priority: 1, lastUpdatedDate: new Date('2021-02-01T08:00:00Z'), isDeleted: false, tags: [tagId1, tagId2] },
+  { _id: new ObjectId('000000000002'), name: 'Contract 2', priority: 1, lastUpdatedDate: new Date('2021-04-01T08:00:00Z'), isDeleted: false, tags: [tagId1, tagId2] },
+  { _id: new ObjectId('000000000003'), name: 'Agreement 1', priority: 2, lastUpdatedDate: new Date('2021-03-08T09:00:00Z'), isDeleted: false, tags: [tagId1, tagId2, tagId3] },
+  { _id: new ObjectId('000000000004'), name: 'License', priority: 5, lastUpdatedDate: new Date('2021-04-16T09:00:00Z'), isDeleted: true, tags: [tagId1, tagId2] },
+  { _id: new ObjectId('000000000005'), name: 'Tax', priority:  10, lastUpdatedDate: new Date('2021-05-24T11:21:39Z'), isDeleted: true, tags: [tagId2] },
+  { _id: new ObjectId('000000000006'), name: 'Business card', priority: 2, lastUpdatedDate: new Date('2021-06-30T21:23:13Z'), isDeleted: false, tags: [tagId3] },
+]);
+
+// Example 1
+// Get the tag with _id equal to ObjectId('000000000001').
+db.tags.findOne({ _id: { $eq: new ObjectId('000000000001') } }); // Option 1: Return the document or null
+// db.tags.find({ _id: { $eq: new ObjectId('000000000001') } }); // Option 2: Returns a cursor, never null
+
+// Example 2
+// Get the documents where priority field is equal to 1.
+// db.documents.find({ priority: { $eq: 1 } });
+
+// Use the following links to find out which query methods and operators to use in the following exercises.
+// Collection methods: https://docs.mongodb.com/manual/reference/method/js-collection/
+// Query operators: https://docs.mongodb.com/manual/reference/operator/query/
+
+// Exercise 1 (Create & Read)
+// Insert a document without specifying _id and query it by name and priority fields
+// TYPE THE STATEMENTS HERE...
+
+// Exercise 2 (Update & Read)
+// Update lastUpdatedDate field with current date and time for those documents where the
+// priority field is greater than 7 and check it by querying.
+// TYPE THE STATEMENTS HERE...
+
+// Exercise 3 (Delete & Read)
+// Delete documents where priority field is greater than 2 and check it by querying.
+// Then calculate the number of elements left in the collection.
+// TYPE THE STATEMENTS HERE...
+
+// Exercise 4 (Aggregation)
+// Get the top 2 documents where tags field contains at least the tag identifier ObjectId('000000000002')
+// sorted by lastUpdatedDate field in descending order.
+// Join the result with the tag collection to have access to the name field.
+// Overwrite the tags field with the names of the tags obtained after joining.
+// Exclude the tagsExtended field from the final result.
+// Finally, answer the next question: 
+// $sort & $limit after $match or after $project? Is it matter?
+// TYPE THE STATEMENTS HERE...
+
+// Exercise 5 (Query plan)
+// Run the previous query and check the query plan (queryPlanner) using explain method.
+// Something to improve the query plan?
+// TYPE THE STATEMENTS HERE...
+
+// Exercise 6 (Query plan)
+// Help MongoDB query optimizer to improve the selection of the query plan.
+// Run the previous query again and check the query plan (queryPlanner).
+// Something different?
+// TYPE THE STATEMENTS HERE...
